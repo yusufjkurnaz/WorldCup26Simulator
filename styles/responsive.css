@@ -1,38 +1,75 @@
-/* ========================================================
-   MOBİL VE DAR EKRAN UYUMU (RESPONSIVE)
-======================================================== */
+/* styles/responsive.css */
 
-@media (max-width: 900px) {
-    /* Genel Boyutlandırmalar */
-    .ana-baslik { font-size: 2.2rem; }
-    .global-header { flex-direction: column; gap: 15px; padding: 15px; }
-    
-    .kayit-slotu { width: 100%; max-width: 350px; }
-    .takim-grid-alani { grid-template-columns: 1fr 1fr; }
-
-    /* TURNUVA AĞACI DİKEY MODA GEÇİŞ */
-    .bracket-container {
+@media screen and (max-width: 768px) {
+    /* Genel Yapı ve Başlıklar */
+    .global-header {
         flex-direction: column;
-        gap: 30px;
+        gap: 15px;
+        text-align: center;
+        padding: 15px;
     }
-
-    .bracket-col {
+    .ana-baslik {
+        font-size: 2rem;
+    }
+    
+    /* Kariyer Slotları ve Takım Seçim Ekranı */
+    .kayit-slotlari-alani {
+        flex-direction: column;
+        align-items: center;
+    }
+    .kayit-slotu {
         width: 100%;
+        max-width: 350px;
         margin-bottom: 20px;
     }
+    .takim-grid-alani {
+        grid-template-columns: repeat(2, 1fr); /* Mobilde yan yana 2 takım */
+        gap: 10px;
+    }
 
-    /* Mobilde "Sol Kanat - Sağ Kanat" ayrımı yerine Turları alt alta dizer */
-    .bracket-col-center {
-        order: 10; /* Final kutusunu mobilde en alta atar */
-        margin-top: 30px;
-        border-top: 2px dashed var(--border-color);
-        padding-top: 30px;
+    /* Oyun İçi Sekmeler ve Butonlar */
+    .grup-sekmeleri {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+    .sekme-btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        flex: 1 1 calc(25% - 10px); /* Butonları küçültüp yayar */
+    }
+    
+    /* Puan Tablosu ve Modallar */
+    .puan-tablosu-alani {
+        overflow-x: auto; /* Tablo taşarsa yana kaydırılabilir olsun */
+    }
+    .puan-tablosu {
+        font-size: 0.85rem;
+    }
+    .modal-kutu {
+        width: 95%;
+        padding: 20px;
+        margin: 10px auto;
+    }
+    
+    /* Gazete ve Rapor Ekranları */
+    #newspaper-content {
+        padding: 15px;
+    }
+    .manset-baslik {
+        font-size: 1.5rem !important;
+    }
+    .istatistik-grid {
+        grid-template-columns: 1fr; /* Raporları alt alta dizer */
     }
 }
 
-@media (max-width: 500px) {
-    .takim-grid-alani { grid-template-columns: 1fr; }
-    .btn-ozel, .btn-macgunu { font-size: 1rem; padding: 15px; }
-    
-    .istatistik-grid { grid-template-columns: 1fr; }
+/* Çok küçük telefonlar için ekstra ayar */
+@media screen and (max-width: 480px) {
+    .takim-grid-alani {
+        grid-template-columns: 1fr; /* İyice küçük ekranda tek sütun */
+    }
+    .sekme-btn {
+        flex: 1 1 calc(33% - 10px);
+    }
 }
