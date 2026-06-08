@@ -1,0 +1,38 @@
+/* ========================================================
+   MOBİL VE DAR EKRAN UYUMU (RESPONSIVE)
+======================================================== */
+
+@media (max-width: 900px) {
+    /* Genel Boyutlandırmalar */
+    .ana-baslik { font-size: 2.2rem; }
+    .global-header { flex-direction: column; gap: 15px; padding: 15px; }
+    
+    .kayit-slotu { width: 100%; max-width: 350px; }
+    .takim-grid-alani { grid-template-columns: 1fr 1fr; }
+
+    /* TURNUVA AĞACI DİKEY MODA GEÇİŞ */
+    .bracket-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .bracket-col {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    /* Mobilde "Sol Kanat - Sağ Kanat" ayrımı yerine Turları alt alta dizer */
+    .bracket-col-center {
+        order: 10; /* Final kutusunu mobilde en alta atar */
+        margin-top: 30px;
+        border-top: 2px dashed var(--border-color);
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 500px) {
+    .takim-grid-alani { grid-template-columns: 1fr; }
+    .btn-ozel, .btn-macgunu { font-size: 1rem; padding: 15px; }
+    
+    .istatistik-grid { grid-template-columns: 1fr; }
+}
