@@ -831,10 +831,17 @@ if (kayitliOturumSlotId) {
     ekranDegistir(DOM.viewMainMenu);
 }
 // GLOBAL ZİYARETÇİ SAYACI (API)
-fetch('https://api.counterapi.dev/v1/wc26sim_yusufk/visits')
+// /up parametresi her ziyarette sayacı 1 artırır ve güncel rakamı döndürür
+fetch('https://api.counterapi.dev/v1/wc26sim_yusufk_site/visits/up')
     .then(response => response.json())
     .then(data => {
         let sayacEl = document.getElementById('ziyaretci-sayisi');
-        if (sayacEl) sayacEl.innerText = data.count;
+        if (sayacEl && data.count) {
+            sayacEl.innerText = data.count;
+        }
     })
-    .catch(err => console.log("Sayaç verisi çekilemedi."));
+    .catch(err => {
+        console.log("Sayaç verisi çekilemedi.");
+        let sayacEl = document.getElementById('ziyaretci-sayisi');
+        if (sayacEl) sayacEl.innerText = "Aktif";
+    });
