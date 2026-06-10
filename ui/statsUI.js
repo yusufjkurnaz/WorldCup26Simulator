@@ -1,4 +1,4 @@
-// ui/statsUI.js (Bunu mevcut dosyanın içine yapıştır)
+// ui/statsUI.js
 
 import { DIL_SOZLUGU, ulkeCevir } from '../modules/lang.js';
 import { ayarlariYukle } from '../modules/storage.js';
@@ -13,7 +13,6 @@ function metinGetir(anahtar) {
     return DIL_SOZLUGU[seciliDil][anahtar] || DIL_SOZLUGU["tr"][anahtar] || anahtar;
 }
 
-// Global Sekme Değiştirme Fonksiyonu
 window.aktifIstatistikSekmesiniDegistir = function(sekmeAdi) {
     document.querySelectorAll('.canli-ist-icerik').forEach(el => {
         el.style.display = 'none';
@@ -27,11 +26,10 @@ window.aktifIstatistikSekmesiniDegistir = function(sekmeAdi) {
     });
 
     const hedefIcerik = document.getElementById(`canli-icerik-${sekmeAdi}`);
-    // Butonu data-hedef ile seçiyoruz ki hata olmasın
     const hedefButon = document.querySelector(`.canli-ist-sekme-btn[data-hedef="${sekmeAdi}"]`);
     
     if (hedefIcerik) {
-        if(sekmeAdi === 'kartlar') hedefIcerik.style.display = 'grid'; // Kartlar sekmesi Grid tasarımı
+        if(sekmeAdi === 'kartlar') hedefIcerik.style.display = 'grid'; 
         else hedefIcerik.style.display = 'block';
         hedefIcerik.classList.add('aktif');
     }
@@ -84,43 +82,43 @@ export function HTMLCanliIstatistiklerPaneliOlustur(oyuncuIstatistikleri) {
         <div style="display:flex; flex-direction:column; gap:15px; width:100%;">
             
             <div style="display:flex; gap:8px; width:100%; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
-                <button class="canli-ist-sekme-btn aktif" data-hedef="gol" style="background:var(--accent-blue); color:#fff; border-color:var(--accent-blue);">⚽ GOL</button>
-                <button class="canli-ist-sekme-btn" data-hedef="asist">🎯 ASİST</button>
-                <button class="canli-ist-sekme-btn" data-hedef="reyting">⭐ REYTİNG</button>
-                <button class="canli-ist-sekme-btn" data-hedef="eldiven">🧤 ELDİVEN</button>
-                <button class="canli-ist-sekme-btn" data-hedef="kartlar">🟨🟥 KART</button>
+                <button class="canli-ist-sekme-btn aktif" data-hedef="gol" style="background:var(--accent-blue); color:#fff; border-color:var(--accent-blue);">${metinGetir('sekmeGol')}</button>
+                <button class="canli-ist-sekme-btn" data-hedef="asist">${metinGetir('sekmeAsist')}</button>
+                <button class="canli-ist-sekme-btn" data-hedef="reyting">${metinGetir('sekmeReyting')}</button>
+                <button class="canli-ist-sekme-btn" data-hedef="eldiven">${metinGetir('sekmeEldiven')}</button>
+                <button class="canli-ist-sekme-btn" data-hedef="kartlar">${metinGetir('sekmeKart')}</button>
             </div>
 
             <div id="modal-istatistik-listesi-icerik">
                 <div id="canli-icerik-gol" class="canli-ist-icerik aktif">
-                    <h4 style="color:var(--accent-red); margin-bottom:12px; border-bottom:2px solid var(--accent-red); padding-bottom:5px; font-size:1rem;">🏆 GOL KRALLIĞI (TOP 10)</h4>
+                    <h4 style="color:var(--accent-red); margin-bottom:12px; border-bottom:2px solid var(--accent-red); padding-bottom:5px; font-size:1rem;">${metinGetir('golKralligi')}</h4>
                     ${topGol.length > 0 ? topGol.map((p, i) => satirOlustur(i + 1, p, p.gol, "⚽")).join('') : `<p style="text-align:center;">${metinGetir('henuzYok')}</p>`}
                 </div>
 
                 <div id="canli-icerik-asist" class="canli-ist-icerik">
-                    <h4 style="color:var(--accent-blue); margin-bottom:12px; border-bottom:2px solid var(--accent-blue); padding-bottom:5px; font-size:1rem;">🎯 ASİST KRALLIĞI (TOP 10)</h4>
+                    <h4 style="color:var(--accent-blue); margin-bottom:12px; border-bottom:2px solid var(--accent-blue); padding-bottom:5px; font-size:1rem;">${metinGetir('asistKralligi')}</h4>
                     ${topAsist.length > 0 ? topAsist.map((p, i) => satirOlustur(i + 1, p, p.asist, "🎯")).join('') : `<p style="text-align:center;">${metinGetir('henuzYok')}</p>`}
                 </div>
 
                 <div id="canli-icerik-reyting" class="canli-ist-icerik">
-                    <h4 style="color:var(--success-green); margin-bottom:12px; border-bottom:2px solid var(--success-green); padding-bottom:5px; font-size:1rem;">⭐ EN YÜKSEK ORTALAMA REYTİNG</h4>
+                    <h4 style="color:var(--success-green); margin-bottom:12px; border-bottom:2px solid var(--success-green); padding-bottom:5px; font-size:1rem;">${metinGetir('yuksekReyting')}</h4>
                     ${topReyting.length > 0 ? topReyting.map((p, i) => satirOlustur(i + 1, p, p.ortalamaReyting, "⭐")).join('') : `<p style="text-align:center;">${metinGetir('henuzYok')}</p>`}
                 </div>
 
                 <div id="canli-icerik-eldiven" class="canli-ist-icerik">
-                    <h4 style="color:#e67e22; margin-bottom:12px; border-bottom:2px solid #e67e22; padding-bottom:5px; font-size:1rem;">🧤 ALTIN ELDİVEN / MAÇTA GOL YEMEME</h4>
+                    <h4 style="color:#e67e22; margin-bottom:12px; border-bottom:2px solid #e67e22; padding-bottom:5px; font-size:1rem;">${metinGetir('altinEldiven')}</h4>
                     ${topEldiven.length > 0 ? topEldiven.map((p, i) => satirOlustur(i + 1, p, p.cleanSheet, "👕")).join('') : `<p style="text-align:center;">${metinGetir('henuzYok')}</p>`}
                 </div>
 
                 <div id="canli-icerik-kartlar" class="canli-ist-icerik" style="grid-template-columns: 1fr 1fr; gap:15px;">
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                         <div>
-                            <h5 style="color:#ffb300; border-bottom:1px solid #ffb300; padding-bottom:4px;">🟨 EN ÇOK SARI KART</h5>
-                            ${topSari.length > 0 ? topSari.map((p, i) => satirOlustur(i + 1, p, p.sariKart, "🟨")).join('') : `<p>Temiz.</p>`}
+                            <h5 style="color:#ffb300; border-bottom:1px solid #ffb300; padding-bottom:4px;">${metinGetir('enCokSari')}</h5>
+                            ${topSari.length > 0 ? topSari.map((p, i) => satirOlustur(i + 1, p, p.sariKart, "🟨")).join('') : `<p>${metinGetir('temiz')}</p>`}
                         </div>
                         <div>
-                            <h5 style="color:var(--accent-red); border-bottom:1px solid var(--accent-red); padding-bottom:4px;">🟥 EN ÇOK KIRMIZI KART</h5>
-                            ${topKirmizi.length > 0 ? topKirmizi.map((p, i) => satirOlustur(i + 1, p, p.kirmiziKart, "🟥")).join('') : `<p>Temiz.</p>`}
+                            <h5 style="color:var(--accent-red); border-bottom:1px solid var(--accent-red); padding-bottom:4px;">${metinGetir('enCokKirmizi')}</h5>
+                            ${topKirmizi.length > 0 ? topKirmizi.map((p, i) => satirOlustur(i + 1, p, p.kirmiziKart, "🟥")).join('') : `<p>${metinGetir('temiz')}</p>`}
                         </div>
                     </div>
                 </div>
