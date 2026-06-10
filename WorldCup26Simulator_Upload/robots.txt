@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://world-cup26-simulator.vercel.app/sitemap.xml
