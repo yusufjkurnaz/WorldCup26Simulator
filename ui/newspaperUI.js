@@ -258,6 +258,11 @@ export function HTMLHaberArsiviCiz(haberlerListesi) {
                 <span style="background: #111; color: white; padding: 4px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 1px;">${metinGetir('flasManset')}</span>
             </div>
             
+            <div class="newspaper-wrapper">
+            <div style="margin-bottom: 15px; display: flex; align-items: center; justify-content: center;">
+                <span style="background: #111; color: white; padding: 4px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 1px;">${metinGetir('flasManset')}</span>
+            </div>
+            
             <div class="haber-container">
                 <div class="haber-baslik">${flashHaber.baslik}</div>
                 <div class="haber-icerik">
