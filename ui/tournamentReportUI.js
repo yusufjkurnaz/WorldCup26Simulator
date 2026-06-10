@@ -71,18 +71,18 @@ export function HTMLTurnuvaRaporuOlustur(takimlarListesi, oyuncuIstatistikleri, 
         <div style="display:flex; flex-direction:column; gap:20px; width:100%; box-sizing: border-box; overflow-x: hidden;">
             
             <div>
-                <h3 style="color: #ffb300; text-shadow: 0 0 10px rgba(255,179,0,0.2); text-align:center; margin-top:0; margin-bottom:12px; font-size:1.05rem; letter-spacing:1px;">⭐ TURNUVANIN BİREYSEL ENLERİ ⭐</h3>
+                <h3 style="color: #ffb300; text-shadow: 0 0 10px rgba(255,179,0,0.2); text-align:center; margin-top:0; margin-bottom:12px; font-size:1.05rem; letter-spacing:1px;">${metinGetir('bireyselEnler')}</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; width: 100%;">
-                    ${odulKartiOlustur("👑", metinGetir('turnuvaninMvp') || "TURNUVANIN EN İYİSİ", mvp, `${mvp ? mvp.ortalamaReyting : "0.0"} REYTİNG`, "var(--success-green)")}
-                    ${odulKartiOlustur("✨", "EN İYİ GENÇ OYUNCU (U23)", gencMvp, `${gencMvp ? gencMvp.ortalamaReyting : "0.0"} REYTİNG`, "#9b59b6")}
-                    ${odulKartiOlustur("🥇", metinGetir('altinAyakkabi') || "ALTIN AYAKKABI", golKrali, `${golKrali ? golKrali.gol : 0} GOL`, "var(--accent-red)")}
-                    ${odulKartiOlustur("🎯", metinGetir('asistKraliUnvan') || "ASİST KRALI", asistKrali, `${asistKrali ? asistKrali.asist : 0} ASİST`, "var(--accent-blue)")}
-                    ${odulKartiOlustur("🧤", metinGetir('altinEldivenUnvan') || "ALTIN ELDİVEN", altinEldiven, `${altinEldiven ? altinEldiven.cleanSheet : 0} MAÇ GOL YEMEDİ`, "#e67e22")}
+                    ${odulKartiOlustur("👑", metinGetir('turnuvaninMvp'), mvp, `${mvp ? mvp.ortalamaReyting : "0.0"} ${metinGetir('kelimeReyting')}`, "var(--success-green)")}
+                    ${odulKartiOlustur("✨", metinGetir('enIyiGenc'), gencMvp, `${gencMvp ? gencMvp.ortalamaReyting : "0.0"} ${metinGetir('kelimeReyting')}`, "#9b59b6")}
+                    ${odulKartiOlustur("🥇", metinGetir('altinAyakkabi'), golKrali, `${golKrali ? golKrali.gol : 0} ${metinGetir('kelimeGol')}`, "var(--accent-red)")}
+                    ${odulKartiOlustur("🎯", metinGetir('asistKraliUnvan'), asistKrali, `${asistKrali ? asistKrali.asist : 0} ${metinGetir('kelimeAsist')}`, "var(--accent-blue)")}
+                    ${odulKartiOlustur("🧤", metinGetir('altinEldivenUnvan'), altinEldiven, `${altinEldiven ? altinEldiven.cleanSheet : 0} ${metinGetir('kelimeMacGolYemedi')}`, "#e67e22")}
                 </div>
             </div>
 
             <div>
-                <h3 style="color: var(--accent-blue); text-align:center; margin-bottom:12px; font-size:1.05rem; letter-spacing:1px;">📊 GLOBAL TURNUVA RAPORU 📊</h3>
+                <h3 style="color: var(--accent-blue); text-align:center; margin-bottom:12px; font-size:1.05rem; letter-spacing:1px;">${metinGetir('globalRapor')}</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; width: 100%;">
                     
                     <div class="rapor-grid-kart">
@@ -106,7 +106,7 @@ export function HTMLTurnuvaRaporuOlustur(takimlarListesi, oyuncuIstatistikleri, 
                             <span class="rapor-kart-baslik">${metinGetir('enBüyükSurpriz')}</span>
                             <span class="rapor-kart-takim" style="color: var(--success-green);">${ulkeCevir(enSurpriz.isim)}</span>
                         </div>
-                        <div class="rapor-kart-sag">⭐ SURPRİZ</div>
+                        <div class="rapor-kart-sag">${metinGetir('surpriz')}</div>
                     </div>
 
                     <div class="rapor-grid-kart" style="border-left: 4px solid var(--accent-red);">
@@ -114,12 +114,12 @@ export function HTMLTurnuvaRaporuOlustur(takimlarListesi, oyuncuIstatistikleri, 
                             <span class="rapor-kart-baslik">${metinGetir('hayalKirikligi')}</span>
                             <span class="rapor-kart-takim" style="color: var(--accent-red);">${ulkeCevir(enHayalKirikligi.isim)}</span>
                         </div>
-                        <div class="rapor-kart-sag">❌ BEKLENTİ</div>
+                        <div class="rapor-kart-sag">${metinGetir('beklentiAltinda')}</div>
                     </div>
 
                     <div class="rapor-grid-kart" style="grid-column: 1 / -1; background: rgba(225, 29, 72, 0.04); border-color: rgba(225, 29, 72, 0.2);">
                         <div class="rapor-kart-sol">
-                            <span class="rapor-kart-baslik" style="color:var(--accent-red); font-weight:bold;">🚨 ${metinGetir('enKasapTakim')}</span>
+                            <span class="rapor-kart-baslik" style="color:var(--accent-red); font-weight:bold;">${metinGetir('enKasapTakim')}</span>
                             <span class="rapor-kart-takim">${ulkeCevir(enKasap.isim)}</span>
                         </div>
                         <div class="rapor-kart-sag" style="color: var(--accent-red); border-color: rgba(225, 29, 72, 0.3);">
