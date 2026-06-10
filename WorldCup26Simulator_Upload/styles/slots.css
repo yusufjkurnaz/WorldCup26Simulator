@@ -1,0 +1,97 @@
+/* --- ANA SAYFA (KARŞILAMA EKRANI VE KAYIT SLOTLARI) --- */
+.menu-kutu {
+    text-align: center;
+    padding: 60px 30px;
+    background-color: var(--bg-container);
+    border-radius: 15px;
+    margin: 40px auto;
+    box-shadow: var(--shadow-main);
+    border-top: 5px solid var(--accent-blue);
+}
+
+.ana-baslik {
+    font-size: 3.5rem;
+    color: var(--accent-red);
+    line-height: 1.1;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.menu-altbaslik {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+}
+
+/* KAYIT SLOTLARI */
+.kayit-slotlari-alani {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.kayit-slotu {
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    width: 250px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.kayit-slotu:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-main);
+    border-color: var(--accent-blue);
+}
+
+.slot-baslik {
+    color: var(--accent-blue);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.slot-icerik p {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.btn-slot-yeni {
+    background-color: var(--success-green);
+    color: white;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: auto;
+}
+
+.btn-slot-devam {
+    background-color: var(--accent-blue);
+    color: white;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.btn-slot-sil {
+    background-color: transparent;
+    color: var(--accent-red);
+    border: 1px solid var(--accent-red);
+    width: 100%;
+    padding: 8px;
+    font-size: 0.9rem;
+    box-shadow: none;
+}
+.btn-slot-sil:hover:not(:disabled) {
+    background-color: var(--accent-red);
+    color: white;
+}
