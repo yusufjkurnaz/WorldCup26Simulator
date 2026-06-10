@@ -8,6 +8,11 @@ function getDil() {
     return ayarlar && ayarlar.dil ? ayarlar.dil : 'tr';
 }
 
+function metinGetir(anahtar) {
+    let seciliDil = getDil();
+    return DIL_SOZLUGU[seciliDil][anahtar] || DIL_SOZLUGU["tr"][anahtar] || anahtar;
+}
+
 function turkceTamlamaEki(isim) {
     if(!isim) return "";
     const unluler = "aıeiouöüAIEİOÖUÜ";
@@ -95,6 +100,31 @@ export function gunlukHaberUret(mac) {
                 icerikler = [`Leaving the pitch with a solid score, ${kazanan} put their opponent ${kaybeden} in a tough spot. They delivered the expected performance.`];
             }
         }
+    } else if (dil === 'de') {
+        if (mac.penalti) {
+            basliklar = [`ELFMETER-SIEG FÜR ${kazanan.toUpperCase()}!`, `HERZSCHMERZ IM SHOOTOUT!`, `${kazanan.toUpperCase()} KOMMT WEITER!`];
+            icerikler = [`Nach einem atemberaubenden Unentschieden konnte ${kazanan} ${kaybeden} im spannenden Elfmeterschießen eliminieren.`, `Die Fans von ${kaybeden} sind am Boden zerstört! ${kazanan} behielt im Elfmeterschießen die Nerven und setzt seine Reise fort.`];
+        } else if (kazanan === "Beraberlik") {
+            if (sE === 0) {
+                basliklar = ["STILLE NACHT!", "ABWEHRREIHEN STANDEN FEST", "KEINE TORE"];
+                icerikler = [`Das mit Spannung erwartete Spiel zwischen ${e} und ${d} endete mit einem 0:0-Unentschieden. Beide Teams spielten sehr defensiv.`];
+            } else {
+                basliklar = ["KEIN SIEGER IM TOREFEST!", "EIN FUSSBALLFEST!", `UNVERGESSLICHES ${sE}:${sD} SPIEL`];
+                icerikler = [`In einem Spiel voller Angriffe und ${sE + sD} Toren konnten ${e} und ${d} den Gleichstand nicht brechen. Die Fans genossen ein wahres Fußballfest.`];
+            }
+        } else {
+            let fark = Math.abs(sE - sD);
+            if (fark >= 3) {
+                basliklar = [`${kazanan.toUpperCase()} ZERSTÖRTE SIE!`, `HISTORISCHER UNTERSCHIED: ${Math.max(sE, sD)}-${Math.min(sE, sD)}`, `ALBTRAUM FÜR ${kaybeden.toUpperCase()}!`];
+                icerikler = [`${kazanan} spielte wie ein wahrer Titelanwärter und zeigte gegen ${kaybeden} eine Show. Sie verließen den Platz mit einem rücksichtslosen Sieg.`, `Großer Schock für ${kaybeden}! Die Moral ist nach dieser schweren Niederlage am Tiefpunkt, während die Fans von ${kazanan} feiern.`];
+            } else if (fark === 1) {
+                basliklar = [`${kazanan.toUpperCase()} GEWINNT KNAPPES DUELL`, "KNAPPER SIEG", `ATEMBERAUBENDES SPIEL GEHT AN ${kazanan.toUpperCase()}!`];
+                icerikler = [`In einem hart umkämpften Spiel sicherte sich ${kazanan} mit einem einzigen Tor einen goldenen Sieg gegen ${kaybeden}.`, `Eine großartige taktische Schlacht endete mit dem Lächeln von ${kazanan}. Trotz all ihrer Bemühungen konnte ${kaybeden} das Spiel nicht drehen.`];
+            } else {
+                basliklar = [`${kazanan.toUpperCase()} MACHT KEINE FEHLER`, `SOUVERÄNER SIEG`, `${kazanan.toUpperCase()} MARSCHIERT WEITER!`];
+                icerikler = [`Mit einem soliden Ergebnis verließ ${kazanan} den Platz und brachte den Gegner ${kaybeden} in eine schwierige Lage. Sie lieferten die erwartete Leistung.`];
+            }
+        }
     } else {
         if (mac.penalti) {
             basliklar = [`BEYAZ NOKTADA ZAFER ${turkceTamlamaEki(kazanan).toUpperCase()}!`, `PENALTILARDA KALP DAYANMADI!`, `${kazanan.toUpperCase()} İPİ GÖĞÜSLEDİ!`];
@@ -131,8 +161,8 @@ export function gunlukHaberUret(mac) {
 
 export function acilisHaberiUret() {
     let dil = getDil();
-    let baslik = dil === 'en' ? "THE WORLD CUP BEGINS!" : "DÜNYA KUPASI BAŞLIYOR!";
-    let icerik = dil === 'en' ? "The wait is over. The biggest tournament on the planet kicks off today. All 48 teams have completed their preparations. Expect surprises, tears, and unforgettable moments." : "Bekleyiş sona erdi. Dünyanın en büyük turnuvası bugün start alıyor. Katılan 48 takım da son taktik antrenmanlarını tamamladı. Şok edici sürprizler, gözyaşları ve unutulmaz anlara hazır olun.";
+    let baslik = dil === 'en' ? "THE WORLD CUP BEGINS!" : (dil === 'de' ? "DIE WELTMEISTERSCHAFT BEGINNT!" : "DÜNYA KUPASI BAŞLIYOR!");
+    let icerik = dil === 'en' ? "The wait is over. The biggest tournament on the planet kicks off today. All 48 teams have completed their preparations. Expect surprises, tears, and unforgettable moments." : (dil === 'de' ? "Das Warten hat ein Ende. Das größte Turnier des Planeten beginnt heute. Alle 48 Teams haben ihre Vorbereitungen abgeschlossen. Erwarten Sie Überraschungen, Tränen und unvergessliche Momente." : "Bekleyiş sona erdi. Dünyanın en büyük turnuvası bugün start alıyor. Katılan 48 takım da son taktik antrenmanlarını tamamladı. Şok edici sürprizler, gözyaşları ve unutulmaz anlara hazır olun.");
     return { baslik, icerik, skorMetni: "", isOzel: true };
 }
 
@@ -141,10 +171,11 @@ export function finalHaberiUret(evSahibi, deplasman) {
     evSahibi = ulkeCevir(evSahibi);
     deplasman = ulkeCevir(deplasman);
 
-    let baslik = dil === 'en' ? `THE WORLD IS WATCHING: ${evSahibi.toUpperCase()} vs ${deplasman.toUpperCase()}!` : `DÜNYANIN GÖZÜ BU MAÇTA: ${evSahibi.toUpperCase()} vs ${deplasman.toUpperCase()}!`;
-    let icerik = dil === 'en' ? "The breathtaking marathon has come to an end. The moment billions have been waiting for is here. Who will write history in this epic showdown?" : `Günlerdir süren nefes kesici maratonun sonuna geldik. Milyarlarca insanın ekran başına kilitleneceği o büyük an çattı. Bu destansı mücadelenin sonunda tarihi kim yazacak?`;
+    let baslik = dil === 'en' ? `THE WORLD IS WATCHING: ${evSahibi.toUpperCase()} vs ${deplasman.toUpperCase()}!` : (dil === 'de' ? `DIE WELT SCHAUT ZU: ${evSahibi.toUpperCase()} vs ${deplasman.toUpperCase()}!` : `DÜNYANIN GÖZÜ BU MAÇTA: ${evSahibi.toUpperCase()} vs ${deplasman.toUpperCase()}!`);
+    let icerik = dil === 'en' ? "The breathtaking marathon has come to an end. The moment billions have been waiting for is here. Who will write history in this epic showdown?" : (dil === 'de' ? "Der atemberaubende Marathon ist zu Ende. Der Moment, auf den Milliarden gewartet haben, ist da. Wer wird in diesem epischen Showdown Geschichte schreiben?" : `Günlerdir süren nefes kesici maratonun sonuna geldik. Milyarlarca insanın ekran başına kilitleneceği o büyük an çattı. Bu destansı mücadelenin sonunda tarihi kim yazacak?`);
+    let kupaMetni = dil === 'en' ? "GRAND FINAL 🏆" : (dil === 'de' ? "GROSSES FINALE 🏆" : "BÜYÜK FİNAL 🏆");
     
-    return { baslik, icerik, skorMetni: "BÜYÜK FİNAL 🏆", isOzel: true };
+    return { baslik, icerik, skorMetni: kupaMetni, isOzel: true };
 }
 
 export function HTMLHaberArsiviCiz(haberlerListesi) {
@@ -155,7 +186,6 @@ export function HTMLHaberArsiviCiz(haberlerListesi) {
     let flashHaber = haberlerListesi[0];
     let gecmisHaberler = haberlerListesi.slice(1);
 
-    // DÜZELTME: column-count tamamen kaldırıldı, metin justify (iki yana yaslı) yapıldı.
     let html = `
         <style>
             .newspaper-wrapper {
@@ -258,11 +288,6 @@ export function HTMLHaberArsiviCiz(haberlerListesi) {
                 <span style="background: #111; color: white; padding: 4px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 1px;">${metinGetir('flasManset')}</span>
             </div>
             
-            <div class="newspaper-wrapper">
-            <div style="margin-bottom: 15px; display: flex; align-items: center; justify-content: center;">
-                <span style="background: #111; color: white; padding: 4px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 1px;">${metinGetir('flasManset')}</span>
-            </div>
-            
             <div class="haber-container">
                 <div class="haber-baslik">${flashHaber.baslik}</div>
                 <div class="haber-icerik">
@@ -275,22 +300,6 @@ export function HTMLHaberArsiviCiz(haberlerListesi) {
     if (gecmisHaberler.length > 0) {
         html += `
             <div class="gecmis-baslik">${metinGetir('gecmisHaberler')}</div>
-            <div class="gecmis-liste">
-        `;
-        // ... (kalanı aynı)
-            
-            <div class="haber-container">
-                <div class="haber-baslik">${flashHaber.baslik}</div>
-                <div class="haber-icerik">
-                    ${flashHaber.icerik}
-                </div>
-                ${flashHaber.skorMetni ? `<div class="haber-skor">${flashHaber.skorMetni}</div>` : ''}
-            </div>
-    `;
-
-    if (gecmisHaberler.length > 0) {
-        html += `
-            <div class="gecmis-baslik">GEÇMİŞ HABERLER</div>
             <div class="gecmis-liste">
         `;
         gecmisHaberler.forEach(h => {
