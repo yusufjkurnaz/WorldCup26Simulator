@@ -754,10 +754,10 @@ function ekranGuncelle() {
     }
 
     if(isFinalFinished) {
-        DOM.btnIstatistikleriGoster.innerHTML = "🏆 Turnuva Raporu";
+       DOM.btnIstatistikleriGoster.innerHTML = metinGetir('turnuvaRaporu');
         DOM.btnIstatistikleriGoster.style.display = "inline-block";
     } else {
-        DOM.btnIstatistikleriGoster.innerHTML = "📊 Canlı İstatistikler";
+        DOM.btnIstatistikleriGoster.innerHTML = metinGetir('canliIstatistikler');
         DOM.btnIstatistikleriGoster.style.display = "inline-block";
     }
 
@@ -873,7 +873,7 @@ DOM.btnIstatistikleriGoster.addEventListener("click", () => {
         if(isFinalBitti) {
             let sampiyon = kazananTakimBul(finalMaci.id);
             istContainer.innerHTML = HTMLTurnuvaRaporuOlustur(takimlar, oyuncuIstatistikleri, sampiyon) + 
-            `<button id="btn-eski-canli-ist-don" class="btn-dev" style="margin-top: 15px; width: 100%; font-size: 0.9rem; background: var(--bg-secondary); color: var(--text-main);">Sezonun Canlı İstatistiklerine Göz At 📊</button>`;
+            `<button id="btn-eski-canli-ist-don" class="btn-dev" style="margin-top: 15px; width: 100%; font-size: 0.9rem; background: var(--bg-secondary); color: var(--text-main);">${metinGetir('sezonunIstatistiklerineDon')}</button>`;
         } else {
             istContainer.innerHTML = HTMLCanliIstatistiklerPaneliOlustur(oyuncuIstatistikleri);
         }
