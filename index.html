@@ -208,7 +208,7 @@
                     Aktif Kariyer: Slot 1
                 </span>
                 <div style="display: flex; gap: 10px;">
-                    <button id="btn-haberler-ekrani-ac" class="btn-kucuk" style="background-color: var(--bg-tertiary); color: var(--text-main); font-weight: bold; border-color: var(--border-color);">📰 Haberler</button>
+                    <button id="btn-haberler-ekrani-ac" class="btn-kucuk" data-lang="haberlerBtn" style="background-color: var(--bg-tertiary); color: var(--text-main); font-weight: bold; border-color: var(--border-color);">📰 Haberler</button>
                     <button id="btn-taktik-ekrani-ac" class="btn-kucuk" data-lang="taktikYonetimiBtn" style="background-color: #ffb300; color: #1a1a2e; font-weight: bold; display: none;">Takım Yönetimi 🧠</button>
                 </div>
             </div>
@@ -330,8 +330,8 @@
 
     <div class="modal-arka-plan" id="cg-mode-modal">
         <div class="modal-kutu" style="max-width: 450px;">
-            <h3 style="color: var(--success-green); margin-bottom: 15px;">✅ Gruplar Hazır!</h3>
-            <p style="color: var(--text-main); margin-bottom: 20px;">Özel gruplarını başarıyla oluşturdun. Peki turnuva maçlarını nasıl yönetmek istersin?</p>
+            <h3 style="color: var(--success-green); margin-bottom: 15px;" data-lang="cgOnayBaslik">✅ Gruplar Hazır!</h3>
+<p style="color: var(--text-main); margin-bottom: 20px;" data-lang="cgOnayMetin">Özel gruplarını başarıyla oluşturdun. Peki turnuva maçlarını nasıl yönetmek istersin?</p>
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <button id="btn-cg-to-a" class="btn-dev" data-lang="modHizliSimule" style="background-color: var(--accent-blue);">⚡ Hızlı Simüle İle Oyna</button>
                 <button id="btn-cg-to-c" class="btn-dev" data-lang="modTaktiksel" style="background-color: #ffb300; color: #1a1a2e;">🧠 Taktiksel Mod İle Oyna</button>
@@ -367,7 +367,7 @@
     <div class="modal-arka-plan" id="newspaper-modal">
         <div class="modal-kutu" style="max-width: 800px; padding: 20px; background-color: var(--bg-tertiary);">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px;">
-                <h3 style="color: var(--text-main); margin: 0; font-size: 1.5rem;">📰 Turnuva Haberleri</h3>
+                <h3 style="color: var(--text-main); margin: 0; font-size: 1.5rem;" data-lang="turnuvaHaberleri">📰 Turnuva Haberleri</h3>
                 <button id="btn-newspaper-kapat" class="btn-kucuk" style="background: transparent; border: none; font-size: 1.5rem; cursor: pointer;">❌</button>
             </div>
             <div id="newspaper-content" style="max-height: 65vh; overflow-y: auto; padding-right: 10px; scrollbar-width: thin;"></div>
