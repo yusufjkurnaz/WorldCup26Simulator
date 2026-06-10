@@ -1,0 +1,111 @@
+/* styles/custom-groups.css */
+
+.cg-container {
+    display: flex;
+    gap: 20px;
+    height: 70vh;
+    margin-top: 20px;
+}
+
+.cg-pool-area {
+    flex: 1;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cg-pool-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* YENİ: Takımlar arası boşluk */
+}
+
+.cg-groups-area {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-auto-rows: max-content; /* KRİTİK DÜZELTME: Satırların takımlar eklendikçe esnemesini sağlar */
+    gap: 15px;
+    overflow-y: auto;
+    padding-right: 10px;
+    padding-bottom: 20px;
+}
+
+.cg-group-box {
+    background-color: var(--bg-tertiary);
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 200px;
+    height: max-content; /* KRİTİK DÜZELTME: Kutunun sınırlarını içerikle beraber büyütür */
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* YENİ: Takımlar arası dikey boşluk */
+}
+
+.cg-group-box.drag-over {
+    border-color: var(--accent-blue);
+    background-color: rgba(74, 144, 226, 0.1);
+    transform: scale(1.02);
+}
+
+.cg-group-box.dolu {
+    border-style: solid;
+    border-color: var(--success-green);
+}
+
+.cg-group-header {
+    text-align: center;
+    font-weight: bold;
+    color: var(--accent-red);
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cg-team-item {
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: grab;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    white-space: nowrap; /* YENİ: İsimlerin alt satıra inip kutuyu patlatmasını engeller */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cg-team-item:active {
+    cursor: grabbing;
+}
+
+.cg-team-item:hover {
+    border-color: var(--accent-blue);
+    transform: translateX(3px);
+}
+
+.cg-team-item.dragging {
+    opacity: 0.5;
+    background-color: var(--bg-tertiary);
+}
+
+.cg-team-gen {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background-color: var(--bg-secondary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex-shrink: 0; /* Yıldız derecesinin sıkışmasını önler */
+}

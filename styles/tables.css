@@ -1,0 +1,37 @@
+/* PUAN TABLOSU */
+.puan-tablosu {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    background-color: var(--bg-body);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.puan-tablosu th, .puan-tablosu td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.puan-tablosu th { 
+    background-color: var(--accent-red); 
+    color: white; 
+    font-weight: bold; 
+    border-bottom: none;
+}
+
+.puan-tablosu tr:last-child td { 
+    border-bottom: none; 
+}
+
+/* Lider ve İkinci vurgusu (Yeşil çizgi) */
+.puan-tablosu tr:nth-child(1) td:first-child, 
+.puan-tablosu tr:nth-child(2) td:first-child { 
+    border-left: 5px solid var(--success-green); 
+}
+
+/* En İyi Üçüncü vurgusu (Mavi çizgi) */
+.puan-tablosu tr.en-iyi-ucuncu td:first-child { 
+    border-left: 5px solid var(--accent-blue); 
+}
