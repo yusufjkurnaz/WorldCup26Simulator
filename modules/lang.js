@@ -1,4 +1,4 @@
-// lang.js
+// modules/lang.js
 
 export const ULKE_SOZLUGU = {
     "Meksika": { en: "Mexico", de: "Mexiko" },
@@ -180,7 +180,31 @@ export const DIL_SOZLUGU = {
         taktikYonetimiBtn: "Takım Yönetimi 🧠",
         taktikTahtasi: "Taktik Tahtası",
         oyunPlani: "Oyun Planı",
-        ilk11Yedekler: "İlk 11 ve Yedekler"
+        ilk11Yedekler: "İlk 11 ve Yedekler",
+
+        // YENİ EKLENEN ÇEVİRİLER
+        flasManset: "FLAŞ MANŞET",
+        gecmisHaberler: "GEÇMİŞ HABERLER",
+        turnuvaHaberleri: "📰 Turnuva Haberleri",
+        canliIstatistikler: "📊 Canlı İstatistikler",
+        turnuvaRaporu: "🏆 Turnuva Raporu",
+        sezonunIstatistiklerineDon: "Sezonun Canlı İstatistiklerine Göz At 📊",
+        golKralligi: "🏆 GOL KRALLIĞI (TOP 10)",
+        asistKralligi: "🎯 ASİST KRALLIĞI (TOP 10)",
+        yuksekReyting: "⭐ EN YÜKSEK ORTALAMA REYTİNG",
+        altinEldiven: "🧤 ALTIN ELDİVEN / MAÇTA GOL YEMEME",
+        enCokSari: "🟨 EN ÇOK SARI KART",
+        enCokKirmizi: "🟥 EN ÇOK KIRMIZI KART",
+        temiz: "Temiz.",
+        bireyselEnler: "⭐ TURNUVANIN BİREYSEL ENLERİ ⭐",
+        turnuvaninMvp: "TURNUVANIN EN İYİSİ",
+        enIyiGenc: "EN İYİ GENÇ OYUNCU (U23)",
+        altinAyakkabi: "ALTIN AYAKKABI",
+        asistKraliUnvan: "ASİST KRALI",
+        altinEldivenUnvan: "ALTIN ELDİVEN",
+        globalRapor: "📊 GLOBAL TURNUVA RAPORU 📊",
+        surpriz: "⭐ SÜRPRİZ",
+        beklentiAltinda: "❌ BEKLENTİ"
     },
     
     en: {
@@ -294,7 +318,31 @@ export const DIL_SOZLUGU = {
         taktikYonetimiBtn: "Team Management 🧠",
         taktikTahtasi: "Tactics Board",
         oyunPlani: "Game Plan",
-        ilk11Yedekler: "Starting XI & Subs"
+        ilk11Yedekler: "Starting XI & Subs",
+
+        // YENİ EKLENEN ÇEVİRİLER
+        flasManset: "BREAKING NEWS",
+        gecmisHaberler: "PREVIOUS NEWS",
+        turnuvaHaberleri: "📰 Tournament News",
+        canliIstatistikler: "📊 Live Stats",
+        turnuvaRaporu: "🏆 Tournament Report",
+        sezonunIstatistiklerineDon: "Check Season's Live Stats 📊",
+        golKralligi: "🏆 TOP SCORERS (TOP 10)",
+        asistKralligi: "🎯 TOP ASSISTS (TOP 10)",
+        yuksekReyting: "⭐ HIGHEST AVERAGE RATING",
+        altinEldiven: "🧤 GOLDEN GLOVE / CLEAN SHEETS",
+        enCokSari: "🟨 MOST YELLOW CARDS",
+        enCokKirmizi: "🟥 MOST RED CARDS",
+        temiz: "Clean.",
+        bireyselEnler: "⭐ INDIVIDUAL AWARDS ⭐",
+        turnuvaninMvp: "PLAYER OF THE TOURNAMENT",
+        enIyiGenc: "BEST YOUNG PLAYER (U23)",
+        altinAyakkabi: "GOLDEN BOOT",
+        asistKraliUnvan: "TOP PLAYMAKER",
+        altinEldivenUnvan: "GOLDEN GLOVE",
+        globalRapor: "📊 GLOBAL TOURNAMENT REPORT 📊",
+        surpriz: "⭐ SURPRISE",
+        beklentiAltinda: "❌ DISAPPOINTMENT"
     },
 
     de: {
@@ -408,6 +456,30 @@ export const DIL_SOZLUGU = {
         taktikYonetimiBtn: "Team-Management 🧠",
         taktikTahtasi: "Taktiktafel",
         oyunPlani: "Spielplan",
-        ilk11Yedekler: "Startelf & Ersatz"
+        ilk11Yedekler: "Startelf & Ersatz",
+
+        // YENİ EKLENEN ÇEVİRİLER
+        flasManset: "EILMELDUNG",
+        gecmisHaberler: "FRÜHERE NACHRICHTEN",
+        turnuvaHaberleri: "📰 Turniernachrichten",
+        canliIstatistikler: "📊 Live-Statistiken",
+        turnuvaRaporu: "🏆 Turnierbericht",
+        sezonunIstatistiklerineDon: "Live-Statistiken der Saison ansehen 📊",
+        golKralligi: "🏆 TORSCHÜTZENKÖNIG (TOP 10)",
+        asistKralligi: "🎯 TOP VORLAGENGEBER (TOP 10)",
+        yuksekReyting: "⭐ HÖCHSTE DURCHSCHNITTSWERTUNG",
+        altinEldiven: "🧤 GOLDENER HANDSCHUH / ZU NULL",
+        enCokSari: "🟨 DIE MEISTEN GELBEN KARTEN",
+        enCokKirmizi: "🟥 DIE MEISTEN ROTEN KARTEN",
+        temiz: "Keine.",
+        bireyselEnler: "⭐ INDIVIDUELLE AUSZEICHNUNGEN ⭐",
+        turnuvaninMvp: "SPIELER DES TURNIERS",
+        enIyiGenc: "BESTER JUNGER SPIELER (U23)",
+        altinAyakkabi: "GOLDENER SCHUH",
+        asistKraliUnvan: "TOP SPIELMACHER",
+        altinEldivenUnvan: "GOLDENER HANDSCHUH",
+        globalRapor: "📊 GLOBALER TURNIERBERICHT 📊",
+        surpriz: "⭐ ÜBERRASCHUNG",
+        beklentiAltinda: "❌ ENTTÄUSCHUNG"
     }
 };
