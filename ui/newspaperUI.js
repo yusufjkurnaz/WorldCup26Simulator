@@ -255,8 +255,24 @@ export function HTMLHaberArsiviCiz(haberlerListesi) {
 
         <div class="newspaper-wrapper">
             <div style="margin-bottom: 15px; display: flex; align-items: center; justify-content: center;">
-                <span style="background: #111; color: white; padding: 4px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 1px;">FLAŞ MANŞET</span>
+                <span style="background: #111; color: white; padding: 4px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 1px;">${metinGetir('flasManset')}</span>
             </div>
+            
+            <div class="haber-container">
+                <div class="haber-baslik">${flashHaber.baslik}</div>
+                <div class="haber-icerik">
+                    ${flashHaber.icerik}
+                </div>
+                ${flashHaber.skorMetni ? `<div class="haber-skor">${flashHaber.skorMetni}</div>` : ''}
+            </div>
+    `;
+
+    if (gecmisHaberler.length > 0) {
+        html += `
+            <div class="gecmis-baslik">${metinGetir('gecmisHaberler')}</div>
+            <div class="gecmis-liste">
+        `;
+        // ... (kalanı aynı)
             
             <div class="haber-container">
                 <div class="haber-baslik">${flashHaber.baslik}</div>
