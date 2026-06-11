@@ -52,7 +52,7 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
     let timelineHTML = "";
     if (macDurumu.olaylar && macDurumu.olaylar.length > 0) {
         timelineHTML += `
-            <div style="max-height: 240px; overflow-y: auto; position: relative; padding: 10px 5px; border: 1px dashed var(--border-color); border-radius: 8px; background: var(--bg-main); scrollbar-width: thin;">
+            <div class="timeline-box" style="max-height: 200px; overflow-y: auto; position: relative; padding: 10px 5px; border: 1px dashed var(--border-color); border-radius: 8px; background: var(--bg-main); scrollbar-width: thin;">
                 <div style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--border-color); transform: translateX(-50%); z-index: 1;"></div>
         `;
         
@@ -89,11 +89,11 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
             }
 
             timelineHTML += `
-                <div style="display: grid; grid-template-columns: 1fr 50px 1fr; align-items: center; margin-bottom: 10px; position: relative; z-index: 2; width: 100%;">
+                <div style="display: grid; grid-template-columns: 1fr 40px 1fr; align-items: center; margin-bottom: 8px; position: relative; z-index: 2; width: 100%;">
                     <div style="text-align: right; padding-right: 8px;">${isEvSahibi ? detayMetni : ""}</div>
                     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                        <div style="background: var(--bg-secondary); border-radius: 10px; padding: 0px 4px; font-size: 0.7rem; font-weight: bold; color: var(--accent-blue); border: 1px solid var(--border-color); margin-bottom: 1px;">${olay.dakika}'</div>
-                        <div style="font-size: 0.95rem;">${ikon}</div>
+                        <div style="background: var(--bg-secondary); border-radius: 10px; padding: 0px 4px; font-size: 0.65rem; font-weight: bold; color: var(--accent-blue); border: 1px solid var(--border-color); margin-bottom: 1px;">${olay.dakika}'</div>
+                        <div style="font-size: 0.85rem;">${ikon}</div>
                     </div>
                     <div style="text-align: left; padding-left: 8px;">${!isEvSahibi ? detayMetni : ""}</div>
                 </div>
@@ -101,11 +101,10 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
         });
         timelineHTML += `</div>`;
     } else {
-        let noEventText = dil === 'en' ? "(No major events occurred during the match)" : (dil === 'de' ? "(Keine nennenswerten Ereignisse während des Spiels)" : "(Maçta kayda değer önemli bir olay yaşanmadı)");
-        timelineHTML = `<div style="margin: 20px 0; text-align: center; color: var(--text-muted); font-style: italic; font-size: 0.9rem;">${noEventText}</div>`;
+        let noEventText = dil === 'en' ? "(No major events)" : (dil === 'de' ? "(Keine Ereignisse)" : "(Önemli bir olay yaşanmadı)");
+        timelineHTML = `<div style="margin: 10px 0; text-align: center; color: var(--text-muted); font-style: italic; font-size: 0.85rem;">${noEventText}</div>`;
     }
 
-    // --- SOL VE SAĞ SÜTUNLAR: REYTİNG ÇİZİCİSİ ---
     const kadroCiz = (oynayanlarArr, takimId) => {
         if(!oynayanlarArr || !macDurumu.reytingler) return "";
         let html = "";
@@ -118,9 +117,9 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
             let rating = macDurumu.reytingler[pid] || 6.0;
             let ratingColor = rating >= 8.0 ? "var(--success-green)" : (rating <= 5.0 ? "var(--accent-red)" : "var(--accent-blue)");
             html += `
-                <div style="display:flex; justify-content: space-between; padding: 5px 4px; border-bottom: 1px solid var(--bg-secondary); font-size: 0.85rem;">
-                    <span><span style="color:var(--text-muted); font-size:0.7rem; margin-right:5px; font-weight: bold;">${p.mevki}</span>${formatOyuncuAdi(p)}</span>
-                    <span style="font-weight: bold; color: ${ratingColor}; background: rgba(0,0,0,0.15); padding: 1px 5px; border-radius: 4px; font-size: 0.8rem;">${rating}</span>
+                <div style="display:flex; justify-content: space-between; padding: 4px 2px; border-bottom: 1px solid var(--bg-secondary); font-size: 0.8rem;">
+                    <span><span style="color:var(--text-muted); font-size:0.65rem; margin-right:4px; font-weight: bold;">${p.mevki}</span>${formatOyuncuAdi(p)}</span>
+                    <span style="font-weight: bold; color: ${ratingColor}; background: rgba(0,0,0,0.15); padding: 1px 4px; border-radius: 4px; font-size: 0.75rem;">${rating}</span>
                 </div>
             `;
         });
@@ -131,108 +130,125 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
 
     return `
         <style> 
-            #match-detail-content { max-width: 980px !important; width: 95% !important; background: var(--bg-main); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow-x: hidden !important; } 
+            /* SİHİRLİ KOD BURADA: overflow-y: auto ve max-height !important */
+            #match-detail-content { 
+                max-width: 980px !important; 
+                width: 95% !important; 
+                max-height: 85vh !important; /* Ekranın %85'inden uzun olamaz */
+                overflow-y: auto !important; /* Kutu taşıyorsa KENDİ İÇİNDE kaydırılabilir olsun */
+                overflow-x: hidden !important;
+                background: var(--bg-main); 
+                border-radius: 12px; 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+                scrollbar-width: thin;
+            } 
             
             .match-report-grid {
                 display: grid;
-                grid-template-columns: 250px 1fr 250px;
-                gap: 15px;
+                grid-template-columns: 220px 1fr 220px;
+                gap: 12px;
                 text-align: left;
                 box-sizing: border-box;
             }
             
             @media screen and (max-width: 768px) {
+                .match-detail-main-wrapper {
+                    padding: 10px !important;
+                }
                 .match-detail-header {
                     flex-direction: column !important;
-                    gap: 10px !important;
-                    padding: 12px !important;
+                    gap: 5px !important;
+                    padding: 10px !important;
+                    margin-bottom: 10px !important;
                 }
                 .match-detail-header div {
                     text-align: center !important;
-                    font-size: 1.1rem !important;
+                    font-size: 1rem !important;
                 }
                 .match-detail-score {
-                    font-size: 1.8rem !important;
+                    font-size: 1.6rem !important;
                     letter-spacing: 1px !important;
                 }
                 .match-report-grid {
                     display: flex !important;
                     flex-direction: column !important;
-                    gap: 15px !important;
-                    padding: 0 5px !important;
+                    gap: 10px !important;
                 }
                 .center-report-box {
-                    order: 1 !important; /* İstatistikler üste gelsin */
+                    order: 1 !important;
                     width: 100% !important;
                 }
                 .ratings-box-home {
                     order: 2 !important;
-                    max-height: 300px !important;
+                    max-height: 220px !important;
                 }
                 .ratings-box-away {
                     order: 3 !important;
-                    max-height: 300px !important;
+                    max-height: 220px !important;
+                }
+                .timeline-box {
+                    max-height: 180px !important;
                 }
             }
         </style>
         
-        <div style="padding: 20px; text-align: center; box-sizing: border-box; max-width: 100%;">
+        <div class="match-detail-main-wrapper" style="padding: 15px; text-align: center; box-sizing: border-box; max-width: 100%;">
             
-            <div class="match-detail-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--bg-tertiary); padding: 15px 25px; border-radius: 10px; border: 1px solid var(--border-color);">
-                <div style="flex: 1; text-align: right; font-size: 1.4rem; font-weight: bold; color: var(--text-main); text-transform: uppercase;">${finalEvSahibi}</div>
-                <div class="match-detail-score" style="flex: 0.4; font-size: 2.5rem; color: var(--accent-red); font-weight: 900; letter-spacing: 3px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); text-align: center;">${macDurumu.skorE} - ${macDurumu.skorD}</div>
-                <div style="flex: 1; text-align: left; font-size: 1.4rem; font-weight: bold; color: var(--text-main); text-transform: uppercase;">${finalDeplasman}</div>
+            <div class="match-detail-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: var(--bg-tertiary); padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border-color);">
+                <div style="flex: 1; text-align: right; font-size: 1.2rem; font-weight: bold; color: var(--text-main); text-transform: uppercase;">${finalEvSahibi}</div>
+                <div class="match-detail-score" style="flex: 0.4; font-size: 2.2rem; color: var(--accent-red); font-weight: 900; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); text-align: center; margin: 0 10px;">${macDurumu.skorE} - ${macDurumu.skorD}</div>
+                <div style="flex: 1; text-align: left; font-size: 1.2rem; font-weight: bold; color: var(--text-main); text-transform: uppercase;">${finalDeplasman}</div>
             </div>
 
             <div class="match-report-grid">
                 
-                <div class="ratings-box-home" style="background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); max-height: 440px; overflow-y: auto; scrollbar-width: thin;">
-                    <h5 style="text-align: center; color: var(--accent-blue); margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; font-size: 0.85rem; letter-spacing: 0.5px;">${finalEvSahibi.toUpperCase()} ${ratingLabel}</h5>
+                <div class="ratings-box-home" style="background: var(--bg-tertiary); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); max-height: 400px; overflow-y: auto; scrollbar-width: thin;">
+                    <h5 style="text-align: center; color: var(--accent-blue); margin-top: 0; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; font-size: 0.8rem; letter-spacing: 0.5px;">${finalEvSahibi.toUpperCase()} ${ratingLabel}</h5>
                     ${kadroCiz(macDurumu.oynayanlarE, macDurumu.isimE)}
                 </div>
 
-                <div class="center-report-box" style="display: flex; flex-direction: column; gap: 15px; justify-content: space-between; overflow: hidden;">
+                <div class="center-report-box" style="display: flex; flex-direction: column; gap: 10px; justify-content: flex-start; overflow: hidden;">
                     
                     <div>
                         ${timelineHTML}
                     </div>
                     
-                    <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                    <div style="background: var(--bg-tertiary); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 6px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                             <span style="font-weight: bold;">%${toplaOynamaE}</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('toplaOynama')}</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">${metinGetir('toplaOynama')}</span>
                             <span style="font-weight: bold;">%${toplaOynamaD}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                             <span style="font-weight: bold;">${xGE}</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('beklenenGol')}</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">${metinGetir('beklenenGol')}</span>
                             <span style="font-weight: bold;">${xGD}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                             <span style="font-weight: bold;">${sutE}</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('toplamSut')}</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">${metinGetir('toplamSut')}</span>
                             <span style="font-weight: bold;">${sutD}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                             <span style="font-weight: bold;">${faulE}</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('faul')}</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">${metinGetir('faul')}</span>
                             <span style="font-weight: bold;">${faulD}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                             <span style="font-weight: bold;">${sariE} 🟨</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('sariKartlar')}</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">${metinGetir('sariKartlar')}</span>
                             <span style="font-weight: bold;">🟨 ${sariD}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                             <span style="font-weight: bold;">${kirmiziE} 🟥</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('kirmiziKartlar')}</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">${metinGetir('kirmiziKartlar')}</span>
                             <span style="font-weight: bold;">🟥 ${kirmiziD}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="ratings-box-away" style="background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); max-height: 440px; overflow-y: auto; scrollbar-width: thin;">
-                    <h5 style="text-align: center; color: var(--accent-blue); margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; font-size: 0.85rem; letter-spacing: 0.5px;">${finalDeplasman.toUpperCase()} ${ratingLabel}</h5>
+                <div class="ratings-box-away" style="background: var(--bg-tertiary); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); max-height: 400px; overflow-y: auto; scrollbar-width: thin;">
+                    <h5 style="text-align: center; color: var(--accent-blue); margin-top: 0; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; font-size: 0.8rem; letter-spacing: 0.5px;">${finalDeplasman.toUpperCase()} ${ratingLabel}</h5>
                     ${kadroCiz(macDurumu.oynayanlarD, macDurumu.isimD)}
                 </div>
 
