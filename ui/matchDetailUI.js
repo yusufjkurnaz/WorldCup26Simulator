@@ -41,6 +41,7 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
 
     const finalEvSahibi = ulkeCevir(evSahibiAd);
     const finalDeplasman = ulkeCevir(deplasmanAd);
+    const dil = getDil();
 
     const formatOyuncuAdi = (p) => {
         if (!p) return "";
@@ -64,7 +65,7 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
                 ikon = "⚽";
                 detayMetni = `<span style="font-weight: bold; color: var(--text-main); font-size: 0.85rem;">${formatOyuncuAdi(olay.golcu)}</span>`;
                 if (olay.asist) {
-                    detayMetni += ` <span style="font-size: 0.75rem; color: var(--text-muted); block">(${formatOyuncuAdi(olay.asist)})</span>`;
+                    detayMetni += ` <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">(${formatOyuncuAdi(olay.asist)})</span>`;
                 }
             } else if (olay.tur === "SARI_KART") {
                 ikon = "🟨";
@@ -80,7 +81,8 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
                 detayMetni = `<span style="color: #e67e22; font-weight: bold; font-size: 0.85rem;">${formatOyuncuAdi(olay.oyuncu)}</span>`;
             } else if (olay.tur === "VAR_IPTAL") {
                 ikon = "📺";
-                detayMetni = `<span style="color: var(--text-muted); text-decoration: line-through; font-size: 0.8rem;">Gol İptal</span>`;
+                let varText = dil === 'en' ? "Goal Cancelled" : (dil === 'de' ? "Tor Annulliert" : "Gol İptal");
+                detayMetni = `<span style="color: var(--text-muted); text-decoration: line-through; font-size: 0.8rem;">${varText}</span>`;
             } else if (olay.tur === "DEGISIKLIK") {
                 ikon = "🔄"; 
                 detayMetni = `<div style="font-size: 0.8rem; color: var(--success-green);">▲ ${formatOyuncuAdi(olay.giren)}</div><div style="font-size: 0.75rem; color: var(--accent-red);">▼ ${formatOyuncuAdi(olay.cikan)}</div>`;
@@ -99,7 +101,8 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
         });
         timelineHTML += `</div>`;
     } else {
-        timelineHTML = `<div style="margin: 20px 0; color: var(--text-muted); font-style: italic; font-size: 0.9rem;">(Maçta kayda değer önemli bir olay yaşanmadı)</div>`;
+        let noEventText = dil === 'en' ? "(No major events occurred during the match)" : (dil === 'de' ? "(Keine nennenswerten Ereignisse während des Spiels)" : "(Maçta kayda değer önemli bir olay yaşanmadı)");
+        timelineHTML = `<div style="margin: 20px 0; text-align: center; color: var(--text-muted); font-style: italic; font-size: 0.9rem;">${noEventText}</div>`;
     }
 
     // --- SOL VE SAĞ SÜTUNLAR: REYTİNG ÇİZİCİSİ ---
@@ -124,27 +127,71 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
         return html;
     };
 
+    let ratingLabel = dil === 'en' ? "RATINGS" : (dil === 'de' ? "BEWERTUNGEN" : "REYTİNGLER");
+
     return `
         <style> 
-            #match-detail-content { max-width: 980px !important; width: 95% !important; background: var(--bg-main); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); } 
+            #match-detail-content { max-width: 980px !important; width: 95% !important; background: var(--bg-main); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow-x: hidden !important; } 
+            
+            .match-report-grid {
+                display: grid;
+                grid-template-columns: 250px 1fr 250px;
+                gap: 15px;
+                text-align: left;
+                box-sizing: border-box;
+            }
+            
+            @media screen and (max-width: 768px) {
+                .match-detail-header {
+                    flex-direction: column !important;
+                    gap: 10px !important;
+                    padding: 12px !important;
+                }
+                .match-detail-header div {
+                    text-align: center !important;
+                    font-size: 1.1rem !important;
+                }
+                .match-detail-score {
+                    font-size: 1.8rem !important;
+                    letter-spacing: 1px !important;
+                }
+                .match-report-grid {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    gap: 15px !important;
+                    padding: 0 5px !important;
+                }
+                .center-report-box {
+                    order: 1 !important; /* İstatistikler üste gelsin */
+                    width: 100% !important;
+                }
+                .ratings-box-home {
+                    order: 2 !important;
+                    max-height: 300px !important;
+                }
+                .ratings-box-away {
+                    order: 3 !important;
+                    max-height: 300px !important;
+                }
+            }
         </style>
         
-        <div style="padding: 20px; text-align: center;">
+        <div style="padding: 20px; text-align: center; box-sizing: border-box; max-width: 100%;">
             
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--bg-tertiary); padding: 15px 25px; border-radius: 10px; border: 1px solid var(--border-color);">
+            <div class="match-detail-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--bg-tertiary); padding: 15px 25px; border-radius: 10px; border: 1px solid var(--border-color);">
                 <div style="flex: 1; text-align: right; font-size: 1.4rem; font-weight: bold; color: var(--text-main); text-transform: uppercase;">${finalEvSahibi}</div>
-                <div style="flex: 0.4; font-size: 2.5rem; color: var(--accent-red); font-weight: 900; letter-spacing: 3px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); text-align: center;">${macDurumu.skorE} - ${macDurumu.skorD}</div>
+                <div class="match-detail-score" style="flex: 0.4; font-size: 2.5rem; color: var(--accent-red); font-weight: 900; letter-spacing: 3px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); text-align: center;">${macDurumu.skorE} - ${macDurumu.skorD}</div>
                 <div style="flex: 1; text-align: left; font-size: 1.4rem; font-weight: bold; color: var(--text-main); text-transform: uppercase;">${finalDeplasman}</div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 250px 1fr 250px; gap: 15px; text-align: left;">
+            <div class="match-report-grid">
                 
-                <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); max-height: 440px; overflow-y: auto; scrollbar-width: thin;">
-                    <h5 style="text-align: center; color: var(--accent-blue); margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; font-size: 0.85rem; letter-spacing: 0.5px;">${finalEvSahibi.toUpperCase()} REYTİNGLER</h5>
+                <div class="ratings-box-home" style="background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); max-height: 440px; overflow-y: auto; scrollbar-width: thin;">
+                    <h5 style="text-align: center; color: var(--accent-blue); margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; font-size: 0.85rem; letter-spacing: 0.5px;">${finalEvSahibi.toUpperCase()} ${ratingLabel}</h5>
                     ${kadroCiz(macDurumu.oynayanlarE, macDurumu.isimE)}
                 </div>
 
-                <div style="display: flex; flex-direction: column; gap: 15px; justify-content: space-between;">
+                <div class="center-report-box" style="display: flex; flex-direction: column; gap: 15px; justify-content: space-between; overflow: hidden;">
                     
                     <div>
                         ${timelineHTML}
@@ -153,39 +200,39 @@ export function HTMLMacDetayiOlustur(macDurumu, evSahibiAd, deplasmanAd) {
                     <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
                         <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
                             <span style="font-weight: bold;">%${toplaOynamaE}</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">Topla Oynama</span>
+                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('toplaOynama')}</span>
                             <span style="font-weight: bold;">%${toplaOynamaD}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
                             <span style="font-weight: bold;">${xGE}</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">Beklenen Gol (xG)</span>
+                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('beklenenGol')}</span>
                             <span style="font-weight: bold;">${xGD}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
                             <span style="font-weight: bold;">${sutE}</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">Toplam Şut</span>
+                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('toplamSut')}</span>
                             <span style="font-weight: bold;">${sutD}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
                             <span style="font-weight: bold;">${faulE}</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">Faul</span>
+                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('faul')}</span>
                             <span style="font-weight: bold;">${faulD}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
                             <span style="font-weight: bold;">${sariE} 🟨</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">Sarı Kartlar</span>
+                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('sariKartlar')}</span>
                             <span style="font-weight: bold;">🟨 ${sariD}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
                             <span style="font-weight: bold;">${kirmiziE} 🟥</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">Kırmızı Kartlar</span>
+                            <span style="color: var(--text-muted); font-size: 0.8rem;">${metinGetir('kirmiziKartlar')}</span>
                             <span style="font-weight: bold;">🟥 ${kirmiziD}</span>
                         </div>
                     </div>
                 </div>
 
-                <div style="background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); max-height: 440px; overflow-y: auto; scrollbar-width: thin;">
-                    <h5 style="text-align: center; color: var(--accent-blue); margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; font-size: 0.85rem; letter-spacing: 0.5px;">${finalDeplasman.toUpperCase()} REYTİNGLER</h5>
+                <div class="ratings-box-away" style="background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); max-height: 440px; overflow-y: auto; scrollbar-width: thin;">
+                    <h5 style="text-align: center; color: var(--accent-blue); margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; font-size: 0.85rem; letter-spacing: 0.5px;">${finalDeplasman.toUpperCase()} ${ratingLabel}</h5>
                     ${kadroCiz(macDurumu.oynayanlarD, macDurumu.isimD)}
                 </div>
 
